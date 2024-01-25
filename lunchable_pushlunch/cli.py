@@ -31,7 +31,7 @@ def notify(continuous: bool, interval: int, user_key: str) -> None:
     """
     Send a Notification for each Uncleared Transaction
     """
-    from lunchable.plugins.pushlunch.pushover import PushLunch
+    from lunchable_pushlunch.pushover import PushLunch
 
     push = PushLunch(user_key=user_key)
     if interval is not None:
