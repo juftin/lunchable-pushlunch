@@ -2,12 +2,12 @@
 Pushover Notifications via lunchable
 """
 
+import asyncio
 import logging
 from base64 import b64decode
 from json import loads
 from os import getenv
 from textwrap import dedent
-from time import sleep
 from typing import Any, Dict, List, Optional
 
 import httpx
@@ -60,7 +60,7 @@ class PushLunch(LunchableApp):
             environment variable.
         """
         super().__init__(access_token=lunchmoney_access_token)
-        self.pushover_session = httpx.Client()
+        self.pushover_session = httpx.AsyncClient()
         self.pushover_session.headers.update({"Content-Type": "application/json"})
 
         _courtesy_token = b"YXpwMzZ6MjExcWV5OGFvOXNicWF0cmdraXc4aGVz"
@@ -78,7 +78,7 @@ class PushLunch(LunchableApp):
 
         self.notified_transactions: List[int] = []
 
-    def send_notification(
+    async def send_notification(
         self,
         message: str,
         attachment: Optional[object] = None,
@@ -146,11 +146,13 @@ class PushLunch(LunchableApp):
             key: value for key, value in params_dict.items() if value is not None
         }
         params.update(self._params)
-        response = self.pushover_session.post(url=self.pushover_endpoint, params=params)
+        response = await self.pushover_session.post(
+            url=self.pushover_endpoint, params=params
+        )
         response.raise_for_status()
         return response
 
-    def post_transaction(
+    async def post_transaction(
         self, transaction: TransactionObject
     ) -> Optional[Dict[str, Any]]:
         """
@@ -207,7 +209,7 @@ class PushLunch(LunchableApp):
             )
             transaction_formatted += f"\n\n{url}"
 
-        response = self.send_notification(
+        response = await self.send_notification(
             message=transaction_formatted, title="Lunch Money Transaction", html=True
         )
         self.notified_transactions.append(transaction.id)
@@ -233,7 +235,7 @@ class PushLunch(LunchableApp):
             float_string = f"$ {float(amount):,.2f}"
         return float_string
 
-    def notify_uncleared_transactions(
+    async def notify_uncleared_transactions(
         self, continuous: bool = False, interval: Optional[int] = None
     ) -> List[TransactionObject]:
         """
@@ -271,14 +273,14 @@ class PushLunch(LunchableApp):
             found_transactions = len(self.notified_transactions)
             uncleared_transactions += self.lunch.get_transactions(status="uncleared")
             for transaction in uncleared_transactions:
-                self.post_transaction(transaction=transaction)
+                await self.post_transaction(transaction=transaction)
             if continuous is True:
                 notified = len(self.notified_transactions)
                 new_transactions = notified - found_transactions
                 logger.info(
                     "%s new transactions pushed. %s total.", new_transactions, notified
                 )
-                sleep(interval * 60)
+                await asyncio.sleep(interval * 60)
             else:
                 continuous_search = False
 

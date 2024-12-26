@@ -137,7 +137,8 @@ typing = "mypy --install-types --non-interactive {args:lunchable_pushlunch tests
 dependencies = [
   "pytest",
   "pytest-cov",
-  "vcrpy"
+  "vcrpy",
+  "pytest-asyncio"
 ]
 
 [tool.hatch.envs.test.scripts]

@@ -1,3 +1,5 @@
+import asyncio
+
 import click
 
 
@@ -36,4 +38,6 @@ def notify(continuous: bool, interval: int, user_key: str) -> None:
     push = PushLunch(user_key=user_key)
     if interval is not None:
         interval = int(interval)
-    push.notify_uncleared_transactions(continuous=continuous, interval=interval)
+    asyncio.run(
+        push.notify_uncleared_transactions(continuous=continuous, interval=interval)
+    )

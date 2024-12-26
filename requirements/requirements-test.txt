@@ -6,6 +6,7 @@
 # - pytest
 # - pytest-cov
 # - vcrpy
+# - pytest-asyncio
 # - click
 # - lunchable>=1.2.1
 #
@@ -34,9 +35,7 @@ click-plugins==1.1.1
     #   -c requirements.txt
     #   lunchable
 coverage==7.4.0
-    # via
-    #   coverage
-    #   pytest-cov
+    # via pytest-cov
 h11==0.14.0
     # via
     #   -c requirements.txt
@@ -94,7 +93,10 @@ pygments==2.17.2
 pytest==7.4.4
     # via
     #   hatch.envs.test
+    #   pytest-asyncio
     #   pytest-cov
+pytest-asyncio==0.23.8
+    # via hatch.envs.test
 pytest-cov==4.1.0
     # via hatch.envs.test
 pyyaml==6.0.1
