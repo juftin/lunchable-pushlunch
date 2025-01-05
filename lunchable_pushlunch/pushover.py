@@ -3,8 +3,10 @@ Pushover Notifications via lunchable
 """
 
 import asyncio
+import calendar
 import logging
 from base64 import b64decode
+from datetime import date, datetime, timedelta, timezone
 from json import loads
 from os import getenv
 from textwrap import dedent
@@ -271,7 +273,12 @@ class PushLunch(LunchableApp):
 
         while continuous_search is True:
             found_transactions = len(self.notified_transactions)
-            uncleared_transactions += self.lunch.get_transactions(status="uncleared")
+            start_date, end_date = self._get_time_period()
+            uncleared_transactions += self.lunch.get_transactions(
+                status="uncleared",
+                start_date=start_date,
+                end_date=end_date,
+            )
             for transaction in uncleared_transactions:
                 await self.post_transaction(transaction=transaction)
             if continuous is True:
@@ -285,3 +292,16 @@ class PushLunch(LunchableApp):
                 continuous_search = False
 
         return uncleared_transactions
+
+    @classmethod
+    def _get_time_period(cls) -> "tuple[date, date]":
+        """
+        Get the Start and End Dates to fetch transactions
+        """
+        today = datetime.now(tz=timezone.utc).astimezone().date()
+        start_of_this_month = today.replace(day=1)
+        end_of_last_month = start_of_this_month - timedelta(days=1)
+        start_of_last_month = end_of_last_month.replace(day=1)
+        last_day_of_this_month = calendar.monthrange(today.year, today.month)[1]
+        end_of_this_month = today.replace(day=last_day_of_this_month)
+        return start_of_last_month, end_of_this_month

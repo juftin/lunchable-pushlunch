@@ -44,8 +44,8 @@ pipx install "lunchable[pushlunch]"
 pip install "lunchable[pushlunch]"
 ```
 
-The below command checks for un-reviewed transactions in the current period
-and sends them as Push Notifications. The `--continuous` flag tells it to run
+The below command checks for un-reviewed transactions in the current and previous
+month and sends them as Push Notifications. The `--continuous` flag tells it to run
 forever which will only send you a push notification once for each transaction.
 By default it will check every 60 minutes, but this can be changed using the
 `--interval` argument.

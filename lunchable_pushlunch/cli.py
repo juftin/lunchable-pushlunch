@@ -41,3 +41,7 @@ def notify(continuous: bool, interval: int, user_key: str) -> None:
     asyncio.run(
         push.notify_uncleared_transactions(continuous=continuous, interval=interval)
     )
+
+
+if __name__ == "__main__":
+    pushlunch()
