@@ -178,7 +178,7 @@ class PushLunch(LunchableApp):
         else:
             category = self.data.categories[transaction.category_id].name
         account_id = transaction.plaid_account_id or transaction.asset_id
-        account = self.data.asset_map[account_id]
+        account = self.data.asset_map[account_id]  # type: ignore[index]
         if isinstance(account, AssetsObject):
             account_name = account.display_name or account.name
         else:

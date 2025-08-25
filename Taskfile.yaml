@@ -5,8 +5,8 @@ version: "3"
 env:
     UV_LOCKED: 1
 vars:
-    SOURCE_CODE: "textual_universal_directorytree"
-    DOCKER_REPO: juftin/textual-universal-directory-tree
+    SOURCE_CODE: "lunchable_pushlunch"
+    DOCKER_REPO: juftin/no-op
 
 tasks:
     #######################################
