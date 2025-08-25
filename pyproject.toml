@@ -63,6 +63,15 @@ docs = [
   "pymdown-extensions"
 ]
 
+[tool.pytest.ini_options]
+addopts = [
+  "-v",
+  "--cov=lunchable_pushlunch",
+  "--cov-report=term-missing",
+  "--cov-report=xml:coverage.xml",
+  "--junitxml=pytest.xml"
+]
+
 [tool.coverage.paths]
 lunchable_pushlunch = ["lunchable_pushlunch", "*/lunchable-pushlunch/lunchable_pushlunch"]
 tests = ["tests", "*/lunchable-pushlunch/tests"]
