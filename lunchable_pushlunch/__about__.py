@@ -2,5 +2,7 @@
 lunchable-pushlunch info file
 """
 
+from importlib.metadata import version
+
 __application__ = "lunchable-pushlunch"
-__version__ = "1.2.0"
+__version__ = version(__application__)
