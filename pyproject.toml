@@ -27,7 +27,7 @@ license = "MIT"
 name = "lunchable-pushlunch"
 readme = "README.md"
 requires-python = ">=3.9,<4"
-version = "1.2.0"
+version = "1.3.0"
 
 [project.entry-points."lunchable.cli"]
 pushlunch = "lunchable_pushlunch.cli:pushlunch"
