@@ -19,10 +19,11 @@ def set_test_env_vars(monkeypatch: pytest.MonkeyPatch) -> None:
     testing_env_vars = [
         "LUNCHMONEY_ACCESS_TOKEN",
         "PUSHOVER_USER_KEY",
+        "PUSHOVER_APP_TOKEN",
     ]
     for env_var in testing_env_vars:
         if not os.getenv(env_var):
-            monkeypatch.setenv(env_var, f"{env_var}_PLACEHOLDER")
+            monkeypatch.setenv(env_var, "XXXXXXXXXX")
 
 
 @pytest.fixture

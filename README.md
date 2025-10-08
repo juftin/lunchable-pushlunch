@@ -2,15 +2,15 @@
 
 <div align="center">
     <p float="center">
-        <img src=https://pushover.net/images/pushover-logo.svg
-            width="35%" alt="lunchable">
+        <img src=https://i.imgur.com/j253mXK.png
+            width="35%" alt="push-notification">
         <img src=https://i.imgur.com/FyKDsG3.png
             width="60%" alt="lunchable">
     </p>
 </div>
 
 <p align="center">
-LunchMoney Push Notifications via Pushover
+LunchMoney Push Notifications
 </p>
 
 <p align="center">
@@ -26,11 +26,17 @@ LunchMoney Push Notifications via Pushover
   <a href="https://gitmoji.dev"><img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg" alt="Gitmoji"></a>
 </p>
 
-`PushLunch` supports Push Notifications via [Pushover](https://pushover.net). Pushover supports iOS
-and Android Push notifications. To get started just provide your Pushover
-`User Key` directly or via the `PUSHOVER_USER_KEY` environment variable.
+`PushLunch` supports Push Notifications via [Pushover](https://pushover.net)
+and [NTFY](https://ntfy.sh). Set your `--provider` flag to either `pushover`
+or `ntfy`(or use the `PUSHLUNCH_PROVIDER` environment variable) to choose
+your provider. Default is `pushover`.
 
-## Run via the Lunchable CLI
+Pushover supports iOS and Android Push notifications. To get started just provide your Pushover
+`Key` (`--key` / `-k`) directly or via the `PUSHOVER_USER_KEY` environment variable.
+
+NTFY is a simple HTTP-based pub-sub notification service. No need to sign up for an account,
+just create a topic and use that as your `Key` (`--key` / `-k`) or set the `NTFY_TOPIC`
+environment variable.
 
 You can install lunchable with [pip](https://pypi.org/project/lunchable/) or
 [pipx](https://pypa.github.io/pipx/). Make sure to use the
